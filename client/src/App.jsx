@@ -8,6 +8,8 @@ import Signin from "./pages/Signin.jsx";
 import Signup from "./pages/Signup.jsx";
 import About from "./pages/About.jsx";
 import Header from "./components/Header.jsx";
+import Profile from "./pages/Profile.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,6 +19,9 @@ export default function App() {
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/About" element={<About />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
