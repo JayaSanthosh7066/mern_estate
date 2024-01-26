@@ -14,9 +14,6 @@ const Profile = () => {
   const [fileper, setfileper] = useState(0);
   const [FileUploadError, setFileUploadError] = useState(false);
   const [formdata, setformata] = useState({});
-  console.log(formdata);
-  console.log(fileper);
-  console.log(FileUploadError);
   // firebase storage
   // allow read;
   //     allow write: if
@@ -100,7 +97,9 @@ const Profile = () => {
           id="password"
           className="border p-3 rounded-lg"
         />
-        <button className="bg-alte-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled: opacity-80"></button>
+        <button className="bg-black text-white rounded-lg p-3 uppercase hover:opacity-95 disabled: opacity-80">
+          Update
+        </button>
       </form>
       <div className="flex justify-between mt-3">
         <span className="text-red-700 cursor-pointer">Delete Account</span>
