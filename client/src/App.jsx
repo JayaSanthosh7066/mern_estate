@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
@@ -10,6 +9,7 @@ import About from "./pages/About.jsx";
 import Header from "./components/Header.jsx";
 import Profile from "./pages/Profile.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import CreateListing from "./pages/CreateListing.jsx";
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +21,7 @@ export default function App() {
         <Route path="/About" element={<About />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="create-listing" element={<CreateListing />} />
         </Route>
       </Routes>
     </BrowserRouter>
