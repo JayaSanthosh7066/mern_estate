@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO).then(() => {
 const app = express();
 app.use(express.json());
 app.use(morgan());
-app.use(cors());
+// app.use(cors());
 app.use(cookieParser());
 app.listen(3001, () => {
   console.log(`Server is listening at port ${3001}`);
