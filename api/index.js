@@ -6,6 +6,7 @@ import cors from "cors";
 import userRouter from "./routes/user.route.js";
 import userAuth from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import listingRouter from "./routes/listing.route.js";
 dotenv.config();
 mongoose.connect(process.env.MONGO).then(() => {
   console.log("Connected to DataBase");
@@ -20,6 +21,7 @@ app.listen(3001, () => {
 });
 app.use("/api/user", userRouter);
 app.use("/api/auth", userAuth);
+app.use("/api/listing", listingRouter);
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server error ";
