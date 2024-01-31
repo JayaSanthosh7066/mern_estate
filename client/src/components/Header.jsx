@@ -9,8 +9,8 @@ const Header = () => {
       <div className="flex justify-between p-3">
         <Link to="/">
           <h1 className="items-center">
-            <span className="text-slate-500 text-2xl">San</span>
-            <span className="text-slate-800 text-2xl">Page</span>
+            <span className="text-slate-500 text-2xl">Santhosh</span>
+            <span className="text-slate-800 text-2xl">Works</span>
           </h1>
         </Link>
         <form className="bg-slate-100 p-2 flex rounded-lg items-center">
