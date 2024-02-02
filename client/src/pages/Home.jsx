@@ -22,7 +22,7 @@ export default function Home() {
         setlistings(data);
         fetchOfferListings();
       } catch (error) {
-        next(error);
+        console.log(error);
       }
     };
     const fetchOfferListings = async () => {
