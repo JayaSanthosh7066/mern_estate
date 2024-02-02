@@ -80,13 +80,14 @@ export const getListings = async (req, res, next) => {
     }
 
     const searchTerm = req.query.searchTerm || "";
-
+    const address = req.query.address || "";
     const sort = req.query.sort || "createdAt";
 
     const order = req.query.order || "desc";
 
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: "i" },
+      address: { $regex: address, $options: "i" },
       offer,
       furnished,
       parking,
@@ -95,7 +96,6 @@ export const getListings = async (req, res, next) => {
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
-
     return res.status(200).json(listings);
   } catch (error) {
     next(error);

@@ -6,6 +6,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [sidebar, setsidebar] = useState({
     searchTerm: "",
+    address: "",
     type: "all",
     parking: false,
     furnished: false,
@@ -20,6 +21,7 @@ export default function Search() {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
+    const addressFromUrl = urlParams.get("address");
     const typeFromUrl = urlParams.get("type");
     const parkingFromUrl = urlParams.get("parking");
     const furnishedFromUrl = urlParams.get("furnished");
@@ -29,6 +31,7 @@ export default function Search() {
 
     if (
       searchTermFromUrl ||
+      addressFromUrl ||
       typeFromUrl ||
       parkingFromUrl ||
       furnishedFromUrl ||
@@ -38,6 +41,7 @@ export default function Search() {
     ) {
       setsidebar({
         searchTerm: searchTermFromUrl || "",
+        address: addressFromUrl || "",
         type: typeFromUrl || "all",
         parking: parkingFromUrl === "true" ? true : false,
         furnished: furnishedFromUrl === "true" ? true : false,
@@ -74,7 +78,9 @@ export default function Search() {
     if (e.target.id === "searchTerm") {
       setsidebar({ ...sidebar, searchTerm: e.target.value });
     }
-
+    if (e.target.id === "address") {
+      setsidebar({ ...sidebar, address: e.target.value });
+    }
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
@@ -99,6 +105,7 @@ export default function Search() {
     e.preventDefault();
     const urlParams = new URLSearchParams();
     urlParams.set("searchTerm", sidebar.searchTerm);
+    urlParams.set("address", sidebar.address);
     urlParams.set("type", sidebar.type);
     urlParams.set("parking", sidebar.parking);
     urlParams.set("furnished", sidebar.furnished);
@@ -125,7 +132,7 @@ export default function Search() {
     <div className="flex flex-col md:flex-row">
       <div className="p-7  border-b-2 md:border-r-2 md:min-h-screen">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-col">
             <label className="whitespace-nowrap font-semibold">
               Search Term:
             </label>
@@ -135,6 +142,17 @@ export default function Search() {
               placeholder="Search..."
               className="border rounded-lg p-3 w-full"
               value={sidebar.searchTerm}
+              onChange={handleChange}
+            />
+            <label className="whitespace-nowrap font-semibold">
+              Search Location:
+            </label>
+            <input
+              type="text"
+              id="address"
+              placeholder="Search..."
+              className="border rounded-lg p-3 w-full"
+              value={sidebar.address}
               onChange={handleChange}
             />
           </div>

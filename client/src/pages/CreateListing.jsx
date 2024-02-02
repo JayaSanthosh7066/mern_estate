@@ -66,7 +66,7 @@ const CreateListing = () => {
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
+      const fileName = new Date().getTime() + file.name + Math.random();
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
@@ -273,7 +273,7 @@ const CreateListing = () => {
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
-                <span className="text-xs">($/month)</span>
+                <span className="text-xs">(₹/month)</span>
               </div>
             </div>
             {formdata.offer && (
@@ -290,7 +290,7 @@ const CreateListing = () => {
                 />
                 <div className="flex flex-col items-center">
                   <p>Discounted price</p>
-                  <span className="text-xs">($/month)</span>
+                  <span className="text-xs">(₹/month)</span>
                 </div>
               </div>
             )}

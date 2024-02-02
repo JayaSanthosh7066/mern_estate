@@ -7,12 +7,24 @@ import "swiper/css/bundle";
 import ListingItem from "../components/Listingitem";
 
 export default function Home() {
+  const [listings, setlistings] = useState([]);
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
   SwiperCore.use([Navigation]);
   console.log(offerListings);
+
   useEffect(() => {
+    const newlistings = async () => {
+      try {
+        const res = await fetch(`/api/listing/get?limit=4`);
+        const data = await res.json();
+        setlistings(data);
+        fetchOfferListings();
+      } catch (error) {
+        next(error);
+      }
+    };
     const fetchOfferListings = async () => {
       try {
         const res = await fetch("/api/listing/get?offer=true&limit=4");
@@ -40,10 +52,10 @@ export default function Home() {
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
-        log(error);
+        console.log(error);
       }
     };
-    fetchOfferListings();
+    newlistings();
   }, []);
   return (
     <div>
@@ -52,13 +64,11 @@ export default function Home() {
         <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
           Find your next <span className="text-slate-500">perfect</span>
           <br />
-          place with ease
+          House easily
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Sahand Estate is the best place to find your next perfect place to
-          live.
+          SanHouse is the best place to find your next perfect place to live.
           <br />
-          We have a wide range of properties for you to choose from.
         </div>
         <Link
           to={"/search"}
@@ -70,9 +80,9 @@ export default function Home() {
 
       {/* swiper */}
       <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
+        {listings &&
+          listings.length > 0 &&
+          listings.map((listing) => (
             <SwiperSlide>
               <div
                 style={{
