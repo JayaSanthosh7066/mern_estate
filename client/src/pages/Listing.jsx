@@ -23,7 +23,6 @@ const Listing = () => {
   const [contact, setContact] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const params = useParams();
-  // console.log(listing);
   useEffect(() => {
     const fetchListing = async () => {
       try {
