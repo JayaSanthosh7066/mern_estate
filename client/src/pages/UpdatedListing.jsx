@@ -26,6 +26,7 @@ const UpdatedListing = () => {
     discountPrice: 0,
     offer: false,
     parking: false,
+    petAllowed: false,
     furnished: false,
   });
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -98,7 +99,7 @@ const UpdatedListing = () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             resolve(downloadURL);
           });
-        }
+        },
       );
     });
   };
@@ -113,6 +114,7 @@ const UpdatedListing = () => {
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
+      e.target.id === "petAllowed" ||
       e.target.id === "offer"
     ) {
       setformdata({
@@ -244,6 +246,16 @@ const UpdatedListing = () => {
                 checked={formdata.offer}
               />
               <span>Offer</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="petAllowed"
+                className="w-5"
+                onChange={handleChange}
+                checked={formdata.petAllowed}
+              />
+              <span>Pets Allowed</span>
             </div>
           </div>
           <div className="flex flex-wrap gap-6">

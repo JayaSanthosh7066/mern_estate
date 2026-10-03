@@ -25,6 +25,7 @@ const CreateListing = () => {
     discountPrice: 0,
     offer: false,
     parking: false,
+    petAllowed: false,
     furnished: false,
   });
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -32,7 +33,7 @@ const CreateListing = () => {
   const [loading, setloading] = useState(false);
   console.log(formdata);
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formdata.imageUrls.length < 7) {
+    if (files.length > 0 && files.length + formdata.imageUrls.length <= 11) {
       const promises = [];
       setuploading(true);
       setImageUploadError(false);
@@ -49,11 +50,11 @@ const CreateListing = () => {
           setuploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image upload failed (2 mb max per image");
+          setImageUploadError("Image upload failed (10 mb max per image");
           setuploading(false);
         });
     } else {
-      setImageUploadError("You can upload only 6 images per listing");
+      setImageUploadError("You can upload only 11 images per listing");
       setuploading(false);
     }
   };
@@ -83,7 +84,7 @@ const CreateListing = () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             resolve(downloadURL);
           });
-        }
+        },
       );
     });
   };
@@ -98,7 +99,8 @@ const CreateListing = () => {
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
-      e.target.id === "offer"
+      e.target.id === "offer" ||
+      e.target.id === "petAllowed"
     ) {
       setformdata({
         ...formdata,
@@ -119,26 +121,40 @@ const CreateListing = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (formdata.imageUrls.length < 1) {
         return setError("You must upload at least one image");
       }
-      if (+formdata.regularPrice < +formdata.discountPrice)
+
+      if (+formdata.regularPrice < +formdata.discountPrice) {
         return setError("Discount price must be lower than regular price");
+      }
+
       setloading(true);
       setError(false);
+
       const res = await fetch("/api/listing/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formdata, userRef: currentUser._id }),
+        credentials: "include",
+        body: JSON.stringify({
+          ...formdata,
+          userRef: currentUser._id,
+        }),
       });
+
       const data = await res.json();
+
       setloading(false);
-      if (data.success == false) {
-        setError(data.message);
+
+      if (!res.ok || data.success === false) {
+        setError(data.message || "Failed to create listing");
+        return;
       }
+
       navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
@@ -232,6 +248,16 @@ const CreateListing = () => {
               />
               <span>Offer</span>
             </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="petAllowed"
+                className="w-5"
+                onChange={handleChange}
+                checked={formdata.petAllowed}
+              />
+              <span>Pets Allowed</span>
+            </div>
           </div>
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
@@ -300,7 +326,7 @@ const CreateListing = () => {
           <p className="font-semibold">
             Images:
             <span className="font-normal text-gray-600 ml-2">
-              The first image will be cover (max 6)
+              The first image will be cover (max 11)
             </span>
           </p>
           <div className="flex gap-4">

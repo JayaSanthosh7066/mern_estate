@@ -11,6 +11,7 @@ import {
   FaMapMarkerAlt,
   FaParking,
   FaShare,
+  FaPaw,
 } from "react-icons/fa";
 import "swiper/css/bundle";
 import Contact from "../components/Contact";
@@ -52,13 +53,13 @@ const Listing = () => {
           <Swiper navigation>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
-                <div
-                  className="h-[500px]"
-                  style={{
-                    background: `url(${url}) center no-repeat`,
-                    backgroundSize: "cover",
-                  }}
-                ></div>
+                <div className="w-full h-[400px] sm:h-[500px] bg-slate-100 flex items-center justify-center">
+                  <img
+                    src={url}
+                    alt="listing"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -125,6 +126,10 @@ const Listing = () => {
               <li className="flex items-center gap-1 whitespace-nowrap ">
                 <FaChair className="text-lg" />
                 {listing.furnished ? "Furnished" : "Unfurnished"}
+              </li>
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaPaw className="text-lg" />
+                {listing.petAllowed ? "Pets Allowed" : "No Pets"}
               </li>
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
