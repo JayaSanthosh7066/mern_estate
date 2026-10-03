@@ -9,6 +9,7 @@ export default function Search() {
     address: "",
     type: "all",
     parking: false,
+    petAllowed: false,
     furnished: false,
     offer: false,
     sort: "created_at",
@@ -25,6 +26,7 @@ export default function Search() {
     const typeFromUrl = urlParams.get("type");
     const parkingFromUrl = urlParams.get("parking");
     const furnishedFromUrl = urlParams.get("furnished");
+    const petAllowedFromUrl = urlParams.get("petAllowed");
     const offerFromUrl = urlParams.get("offer");
     const sortFromUrl = urlParams.get("sort");
     const orderFromUrl = urlParams.get("order");
@@ -45,6 +47,7 @@ export default function Search() {
         type: typeFromUrl || "all",
         parking: parkingFromUrl === "true" ? true : false,
         furnished: furnishedFromUrl === "true" ? true : false,
+        petAllowed: petAllowedFromUrl === "true" ? true : false,
         offer: offerFromUrl === "true" ? true : false,
         sort: sortFromUrl || "created_at",
         order: orderFromUrl || "desc",
@@ -84,6 +87,7 @@ export default function Search() {
     if (
       e.target.id === "parking" ||
       e.target.id === "furnished" ||
+      e.target.id === "petAllowed" ||
       e.target.id === "offer"
     ) {
       setsidebar({
@@ -109,6 +113,7 @@ export default function Search() {
     urlParams.set("type", sidebar.type);
     urlParams.set("parking", sidebar.parking);
     urlParams.set("furnished", sidebar.furnished);
+    urlParams.set("petAllowed", sidebar.petAllowed);
     urlParams.set("offer", sidebar.offer);
     urlParams.set("sort", sidebar.sort);
     urlParams.set("order", sidebar.order);
@@ -197,6 +202,16 @@ export default function Search() {
                 checked={sidebar.offer}
               />
               <span>Offer</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="petAllowed"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebar.petAllowed}
+              />
+              <span>Pets Allowed</span>
             </div>
           </div>
           <div className="flex gap-2 flex-wrap items-center">

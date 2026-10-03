@@ -33,6 +33,10 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    petAllowed: {
+      type: Boolean,
+      default: false,
+    },
     parking: {
       type: Boolean,
       required: true,
@@ -54,7 +58,7 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 const Listing = mongoose.model("Listing", listingSchema);
 

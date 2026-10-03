@@ -33,7 +33,7 @@ export const updateListing = async (req, res, next) => {
     const updatedlisting = await Listing.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
     res.status(200).json(updatedlisting);
   } catch (error) {
@@ -73,6 +73,12 @@ export const getListings = async (req, res, next) => {
       parking = { $in: [false, true] };
     }
 
+    let petAllowed = req.query.petAllowed;
+
+    if (petAllowed === undefined || petAllowed === "false") {
+      petAllowed = { $in: [false, true] };
+    }
+
     let type = req.query.type;
 
     if (type === undefined || type === "all") {
@@ -91,6 +97,7 @@ export const getListings = async (req, res, next) => {
       offer,
       furnished,
       parking,
+      petAllowed,
       type,
     })
       .sort({ [sort]: order })
