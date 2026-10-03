@@ -48,7 +48,7 @@ const UpdatedListing = () => {
   }, []);
   console.log(formdata);
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formdata.imageUrls.length < 7) {
+    if (files.length > 0 && files.length + formdata.imageUrls.length <= 11) {
       const promises = [];
       setuploading(true);
       setImageUploadError(false);
@@ -65,11 +65,11 @@ const UpdatedListing = () => {
           setuploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image upload failed (2 mb max per image");
+          setImageUploadError("Image upload failed (10 mb max per image)");
           setuploading(false);
         });
     } else {
-      setImageUploadError("You can upload only 6 images per listing");
+      setImageUploadError("You can upload only 11 images per listing");
       setuploading(false);
     }
   };
@@ -325,7 +325,7 @@ const UpdatedListing = () => {
           <p className="font-semibold">
             Images:
             <span className="font-normal text-gray-600 ml-2">
-              The first image will be cover (max 6)
+              The first image will be cover (max 11)
             </span>
           </p>
           <div className="flex gap-4">
